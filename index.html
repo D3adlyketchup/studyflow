@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StudyFlow</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="app">
+  <!-- Header -->
+  <header class="header" style="grid-column:1/-1; grid-row:1;">
+    <div class="logo">Study<span>Flow</span></div>
+    <div class="clock">
+      <span class="clock-val" id="clockDisplay">00:00:00</span>
+    </div>
+  </header>
+
+  <!-- Timer Panel -->
+  <div class="timer-panel" id="timerPanel" style="grid-column:1; grid-row:2;">
+    <div class="timer-ring">
+      <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <circle class="ring-track" cx="100" cy="100" r="90"/>
+        <circle class="ring-progress" id="ringProgress" cx="100" cy="100" r="90"/>
+      </svg>
+      <div class="timer-display">
+        <div class="timer-digits" id="timerDisplay">00:00</div>
+        <div class="timer-label">time remaining</div>
+        <div class="timer-status" id="timerStatus">● active</div>
+      </div>
+    </div>
+
+    <div class="timer-inputs">
+      <input class="min-input" type="number" id="minuteInput" value="25" min="1" max="180" />
+      <span class="min-label">MIN</span>
+    </div>
+
+    <div class="preset-btns">
+      <button class="preset-btn" onclick="setPreset(5)">5</button>
+      <button class="preset-btn" onclick="setPreset(10)">10</button>
+      <button class="preset-btn" onclick="setPreset(25)">25</button>
+      <button class="preset-btn" onclick="setPreset(45)">45</button>
+      <button class="preset-btn" onclick="setPreset(60)">60</button>
+    </div>
+
+    <div class="ctrl-btns">
+      <button class="btn btn-primary" id="startBtn" onclick="toggleTimer()">START</button>
+      <button class="btn btn-secondary" onclick="resetTimer()">RESET</button>
+    </div>
+  </div>
+
+  <!-- Todo Panel -->
+  <div class="todo-panel" style="grid-column:1; grid-row:3;">
+    <div class="todo-progress">
+      <div class="todo-progress-bar" id="todoProgressBar"></div>
+    </div>
+    <div class="panel-header">
+      <div class="panel-title">Tasks</div>
+      <div class="queue-count" id="todoCount">0 tasks</div>
+    </div>
+    <div class="add-todo">
+      <input class="todo-input" type="text" id="todoInput" placeholder="Add a task…" onkeydown="if(event.key==='Enter')addTodo()"/>
+      <button class="todo-add-btn" onclick="addTodo()">+</button>
+    </div>
+    <div class="todo-list" id="todoList">
+      <div class="empty-todos">
+        <div class="empty-icon2">✏️</div>
+        <div>No tasks added</div>
+      </div>
+    </div>
+    <div class="todo-stats">
+      <span><span class="todo-stat-done" id="todoDoneCount">0</span> / <span id="todoTotalCount">0</span> completed</span>
+      <button class="clear-done-btn" onclick="clearDone()">CLEAR COMPLETED</button>
+    </div>
+  </div>
+
+  <!-- Video Panel -->
+  <div class="video-panel" style="grid-column:2; grid-row:2/4;">
+    <div class="video-embed">
+      <div class="no-video" id="noVideo">
+        <div class="no-video-icon">▶</div>
+        <div>ADD A VIDEO</div>
+        <div style="font-size:10px;color:var(--muted)">and start the timer</div>
+      </div>
+      <iframe id="ytPlayer" style="display:none" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    </div>
+    <div class="video-info">
+      <div class="now-playing" id="nowPlayingInfo">
+        Now playing
+        <span id="nowPlayingTitle">—</span>
+      </div>
+      <div class="vid-nav">
+        <button class="nav-btn" onclick="prevVideo()" title="Previous">‹</button>
+        <button class="nav-btn" onclick="nextVideo()" title="Next">›</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Status Bar -->
+  <div class="status-bar" style="grid-column:1/-1; grid-row:4;">
+    <div class="status-dot" id="statusDot"></div>
+    <span class="status-msg" id="statusMsg">Ready to begin — set a timer and add videos</span>
+  </div>
+
+  <!-- Queue Panel -->
+  <div class="queue-panel">
+    <div class="panel-header">
+      <div class="panel-title">Queue</div>
+      <div class="queue-count" id="queueCount">0 videos</div>
+    </div>
+    <div class="add-url">
+      <input class="url-input" type="text" id="urlInput" placeholder="Paste YouTube link here…" onkeydown="if(event.key==='Enter')addVideo()"/>
+      <button class="add-btn" onclick="addVideo()">+</button>
+    </div>
+    <div class="queue-list" id="queueList">
+      <div class="empty-queue">
+        <div class="empty-icon">📋</div>
+        <div>No videos in queue</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Notification -->
+<div class="notification" id="notification">⏱ Timer finished!</div>
+
+<script src="js/script.js"></script>
+</body>
+</html>
